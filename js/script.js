@@ -46,7 +46,7 @@ btn.addEventListener('click', function(){
             arrayBomb.push(randomNumber)
         }
     }
-    // console.log(arrayBomb); 
+    console.log(arrayBomb); 
 
     // Creo fuori il ciclo for due variabile per il conteggio delle bombe e delle celle vuote ad ogni click
     let counterBomb = 0;
@@ -62,34 +62,37 @@ btn.addEventListener('click', function(){
             // Se il numero dello square cliccato è uguale al numero presente nell'array, allora gli viene assegnata la classe bomba
             if (arrayBomb.includes(i)) {
                 this.classList.add('click-bomb');
+                this.style.pointerEvents = 'none';
                 counterBomb++;
             // altrimenti gli viene assegnata la classe cella
             } else {
                 console.log(this.children[0].innerHTML);
                 square.classList.add('click-cell');
+                this.style.pointerEvents = 'none';
                 counterCell++
             }
             // lo square selezionato viene svuotato dallo span con l'inserimento di una stringa vuota
             this.innerHTML='';
 
             console.log('Bombe prese:' + counterBomb);
+            console.log('Celle liberate:' + counterCell)
+            
+            let numCellFree = difficultNum - 16;
+            let userMessage;
             // Se il counterBomb raggiunge valore 16, l'utente ha perso
             if (counterBomb === 16) {
-                alert("Hai perso!");
+                userMessage="Hai perso!";
                 mainGrid.innerHTML = '';
                 mainGrid.classList.replace("start-image", "lose-image");
-            };
-            
-            console.log('Celle liberate:' + counterFree)
-            // Se il counterCell raggiunge il suo valore massimo e il counterBomb è inferiore a 16, l'utente supera il livello
-            if (counterCell === (difficultNum - 16) && counterBomb < 16){
-                alert("Hai vinto!");
+            } else if (counterCell === numCellFree && counterBomb !== 16){
+                // Se il counterCell raggiunge il suo valore massimo e il counterBomb è inferiore a 16, l'utente supera il livello
+                userMessage="Hai vinto!";
                 mainGrid.innerHTML = '';
                 mainGrid.classList.replace("start-image", "win-image");
             }
         });
-    }
-})
+    };
+});
    
 // Creo la funzione che genera numeri
     
